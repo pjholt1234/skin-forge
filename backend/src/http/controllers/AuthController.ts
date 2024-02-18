@@ -30,9 +30,10 @@ export default class AuthController implements ControllerInterface {
             }
 
             const token = jwt.sign({ userId: user.id }, 'secret');
-            res.status(200).send({token})
+            return res.status(200).send({token});
 
         } catch (error) {
+            console.log(error);
             res.status(403).send('Authentication failed.');
         }
     }
