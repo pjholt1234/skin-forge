@@ -26,6 +26,7 @@ class Server {
     }
 
     private registerRoutes(): void {
+        // @ts-ignore
         this.routes.map((route: Route) => {
             const requestType = route.method as keyof express.Application;
             const Controller = route.controller;

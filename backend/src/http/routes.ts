@@ -4,7 +4,7 @@ import AuthController from "./controllers/AuthController";
 const routes: Route[] = [
     {
         method: 'post',
-        path: '/',
+        path: '/login',
         controller: AuthController,
         controllerFunction: 'login'
     },
