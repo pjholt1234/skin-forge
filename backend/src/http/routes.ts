@@ -8,6 +8,12 @@ const routes: Route[] = [
         controller: AuthController,
         controllerFunction: 'login'
     },
+    {
+        method: 'post',
+        path: '/register',
+        controller: AuthController,
+        controllerFunction: 'register'
+    },
 ];
 
 export default routes;

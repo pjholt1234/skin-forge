@@ -47,4 +47,27 @@ export default class AuthController implements ControllerInterface {
             res.status(403).send('Authentication failed.');
         }
     }
+
+    public static async register(req: any, res: any) {
+        const prisma = new PrismaClient();
+
+        const { email, password, name } = req.body as { email: string, password: string, name: string };
+
+        try {
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const user = await prisma.user.create({
+                data: {
+                    email,
+                    password: hashedPassword,
+                    name,
+                },
+            });
+
+            res.status(200).send(user);
+        } catch (error) {
+            console.log(error);
+            res.status(403).send('Registration failed.');
+        }
+    }
 }

@@ -3,40 +3,44 @@
 import React, { useState } from 'react';
 import { Button, Input, Typography, Card } from '@material-tailwind/react';
 import axios from "axios";
-import { useCookies } from 'next-client-cookies';
 import { useRouter } from 'next/navigation';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const loginEndpoint = process.env.NEXT_PUBLIC_BACKEND_URL + '/login';
-    const cookies = useCookies();
+    const registrationEndpoint = process.env.NEXT_PUBLIC_BACKEND_URL + '/register';
     const router = useRouter();
 
-    const handleLogin = async () => {
+    const handleRegistration = async () => {
+        console.log(password, passwordConfirmation);
+        if (password !== passwordConfirmation) {
+            console.error('Passwords do not match');
+            return;
+        }
+
         setLoading(true);
         try {
+    
             const response = await axios.post(
-                loginEndpoint,
-                { email, password },
+                registrationEndpoint,
+                { email, password, name},
                 {
                     headers: {
                         'authorization': process.env.NEXT_PUBLIC_AUTH_TOKEN
                     }
                 }
             );
-            
-            console.log('Login response:', response);
 
-            const token = response?.data?.token;
-            cookies.set('token', token, { secure: true });
-            router.push('/');
+            router.push('/login');
 
+    
             setLoading(false);
         } catch (error) {
-            console.error('Login failed:', error);
+            console.error('Registration failed:', error);
         } finally {
             setLoading(false);
         }
@@ -54,7 +58,7 @@ const Login: React.FC = () => {
                 <Typography variant="h5">
                     Sign in
                 </Typography>
-                <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+                <form onSubmit={(e) => { e.preventDefault(); handleRegistration(); }}>
                     <Input
                         variant="outlined"
                         required
@@ -64,6 +68,18 @@ const Login: React.FC = () => {
                         autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className="mb-4"
+                    />
+                    <Input
+                        variant="outlined"
+                        required
+                        id="name"
+                        label="Name"
+                        name="name"
+                        autoComplete="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="mb-4"
                     />
                     <Input
                         variant="outlined"
@@ -75,6 +91,19 @@ const Login: React.FC = () => {
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className="mb-4"
+                    />
+                    <Input
+                        variant="outlined"
+                        required
+                        name="password_confirmation"
+                        label="Confirm Password"
+                        type="password"
+                        id="password_confirmation"
+                        autoComplete="current-password"
+                        value={passwordConfirmation}
+                        onChange={(e) => setPasswordConfirmation(e.target.value)}
+                        className="mb-4"
                     />
                     <Button
                         type="submit"
@@ -90,4 +119,4 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;
+export default Register;
