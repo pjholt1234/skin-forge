@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { Button, Input, Typography, Card } from '@material-tailwind/react';
 import axios from "axios";
+import { useCookies } from 'next-client-cookies';
+import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -10,6 +12,8 @@ const Login: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
     const loginEndpoint = process.env.NEXT_PUBLIC_BACKEND_URL + '/login';
+    const cookies = useCookies();
+    const router = useRouter();
 
     const handleLogin = async () => {
         setLoading(true);
@@ -23,12 +27,15 @@ const Login: React.FC = () => {
                     }
                 }
             );
+            
+            console.log('Login response:', response);
 
-            const token = response.data.token;
-            localStorage.setItem('token', token);
+            const token = response?.data?.token;
+            cookies.set('token', token, { secure: true });
+            router.push('/');
             setLoading(false);
         } catch (error) {
-            console.error('Login failed:', error.response.data);
+            console.error('Login failed:', error);
         } finally {
             setLoading(false);
         }

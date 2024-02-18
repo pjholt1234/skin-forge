@@ -28,8 +28,18 @@ export default class AuthController implements ControllerInterface {
             if (!validPassword) {
                 throw new Error('Invalid password');
             }
+            
+            const now = new Date();
+            const data = { 
+                userId: user.id, 
+                email: user.email,
+                exp: now.setDate(now.getDate() + 7),
+                issuer: process.env.APP_NAME,
+            };
 
-            const token = jwt.sign({ userId: user.id }, 'secret');
+            console.log(data);
+
+            const token = jwt.sign(data, JSON.stringify(process.env.JWT_SECRET));
             return res.status(200).send({token});
 
         } catch (error) {

@@ -37,7 +37,6 @@ class Server {
                 typeof this.app[requestType] !== "function" ||
                 typeof Controller[controllerFunction] !== "function"
             ) {
-                console.log(Controller[controllerFunction]);
                 // @ts-ignore
                 throw new Error("Invalid route.");
             }
