@@ -4,13 +4,6 @@ import importEnv from "../ImportEnv";
 import routes from "./routes";
 import Route from "../types/Route";
 
-class Error {
-    constructor(invalidRoute: string) {
-
-    }
-
-}
-
 class Server {
     public app: express.Application;
     private routes: any[];
@@ -19,11 +12,8 @@ class Server {
         importEnv();
         this.app = express();
         this.routes = routes;
-        this.registerRoutes();
-    }
-
-    public start(): void {
         this.setUpServer();
+        this.registerRoutes();
     }
 
     private setUpServer(): void {
@@ -47,7 +37,8 @@ class Server {
                 typeof Controller[controllerFunction] !== "function"
             ) {
                 console.log(Controller[controllerFunction]);
-                throw new Error("Invalid route");
+                // @ts-ignore
+                throw new Error("Invalid route.");
             }
 
             this.app[requestType](
