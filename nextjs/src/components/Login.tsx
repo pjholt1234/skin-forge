@@ -5,10 +5,15 @@ import { Button, Input, Typography, Card } from '@material-tailwind/react';
 import axios from "axios";
 import { useCookies } from 'next-client-cookies';
 import { useRouter } from 'next/navigation';
+import InputError from './InputError';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+
     const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
     const [loading, setLoading] = useState(false);
 
     const loginEndpoint = process.env.NEXT_PUBLIC_BACKEND_URL + '/login';
@@ -17,6 +22,21 @@ const Login: React.FC = () => {
 
     const handleLogin = async () => {
         setLoading(true);
+        setEmailError('');
+        setPasswordError('');
+
+        if(email === ''){
+            setEmailError('Email is required');
+            setLoading(false);
+            return;
+        }
+
+        if(password === ''){
+            setPasswordError('Password is required');
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await axios.post(
                 loginEndpoint,
@@ -34,7 +54,8 @@ const Login: React.FC = () => {
 
             setLoading(false);
         } catch (error) {
-            console.error('Login failed:', error);
+            setEmailError(' ');
+            setPasswordError(' ');
         } finally {
             setLoading(false);
         }
@@ -49,7 +70,7 @@ const Login: React.FC = () => {
             </Card>
         ) : (
             <Card className="mt-6 w-96 p-5">
-                <Typography variant="h5">
+                <Typography variant="h5" className="mb-5">
                     Sign in
                 </Typography>
                 <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
@@ -62,7 +83,10 @@ const Login: React.FC = () => {
                         autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        error={emailError !== ''}
                     />
+                    <InputError error={emailError} />
+
                     <Input
                         variant="outlined"
                         required
@@ -73,7 +97,10 @@ const Login: React.FC = () => {
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        error={passwordError !== ''}
                     />
+                    <InputError error={passwordError} />
+
                     <Button
                         type="submit"
                         fullWidth
