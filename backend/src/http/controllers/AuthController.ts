@@ -37,8 +37,6 @@ export default class AuthController implements ControllerInterface {
                 issuer: process.env.APP_NAME,
             };
 
-            console.log(data);
-
             const token = jwt.sign(data, JSON.stringify(process.env.JWT_SECRET));
             return res.status(200).send({token});
 
@@ -52,9 +50,47 @@ export default class AuthController implements ControllerInterface {
         const prisma = new PrismaClient();
 
         const { email, password, name } = req.body as { email: string, password: string, name: string };
+        
+        const validEmail = String(email)
+            .toLowerCase()
+            .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+        
+        if (!validEmail) {
+            res.status(400).send({ email: 'Invalid email' });
+            return;
+        }
+        
+        if (name.length < 4) {
+            res.status(400).send({name: 'Username must be at least 4 characters long'});
+            return;
+        }
+
+        if (password.length < 8) {
+            res.status(400).send({password: 'Password must be at least 8 characters long'});
+            return;
+        }
 
         try {
-            const hashedPassword = await bcrypt.hash(password, 10);
+            const user = await prisma.user.findUnique({
+                where: {
+                    email: email,
+                  },
+            });
+
+            if (user) {
+                return res.status(400).json(
+                    res.status(400).send({ email: 'Email already exisits.' })
+                );
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(403).send('Registration failed.');
+        }
+
+        try {
+            const hashedPassword = await bcrypt.hash(password, 8);
 
             const user = await prisma.user.create({
                 data: {
@@ -66,7 +102,6 @@ export default class AuthController implements ControllerInterface {
 
             res.status(200).send(user);
         } catch (error) {
-            console.log(error);
             res.status(403).send('Registration failed.');
         }
     }

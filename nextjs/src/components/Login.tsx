@@ -27,8 +27,6 @@ const Login: React.FC = () => {
                     }
                 }
             );
-            
-            console.log('Login response:', response);
 
             const token = response?.data?.token;
             cookies.set('token', token, { secure: true });
