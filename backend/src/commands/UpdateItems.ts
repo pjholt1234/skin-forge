@@ -90,7 +90,7 @@ class UpdateItems {
         let type = null;
 
         itemTypes.forEach((itemType) => {
-            if (name.includes(itemType)) {
+            if (name.includes(itemType + ' |')) {
                 type = itemType;
             }
         });
