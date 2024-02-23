@@ -75,8 +75,8 @@ const Login: React.FC = () => {
                 </Typography>
                 <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
                     <Input
-                        variant="outlined"
-                        required
+                        variant="standard"
+                        requiredstandard
                         id="email"
                         label="Email"
                         name="email"
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
                     <InputError error={emailError} />
 
                     <Input
-                        variant="outlined"
+                        variant="standard"
                         required
                         name="password"
                         label="Password"
@@ -100,6 +100,11 @@ const Login: React.FC = () => {
                         error={passwordError !== ''}
                     />
                     <InputError error={passwordError} />
+
+                    <div className="block text-sm grid grid-cols-2 mb-2">
+                        <a href="/register">Register</a>
+                        <a href="/forgot-password">Forgot your password?</a>
+                    </div>
 
                     <Button
                         type="submit"
