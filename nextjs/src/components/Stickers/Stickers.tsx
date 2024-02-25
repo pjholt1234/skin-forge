@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import getStickers from "@/helpers/getStickers";
-import SearchableDropdown from "@/components/SearchableDropdown";
+import SearchableDropdown from "@/components/General/SearchableDropdown";
 import Box from "@/components/General/Box";
 import {Button} from "@material-tailwind/react";
 import StickerImageBox from "@/components/Stickers/StickerImageBox";
@@ -19,6 +19,8 @@ const Stickers = () => {
     const [items, setItems] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
 
+
+    //todo this probably needs to be abstracted
     useEffect(() => {
         const fetchData = async () => {
             try {

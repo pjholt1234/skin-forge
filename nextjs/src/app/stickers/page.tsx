@@ -3,7 +3,7 @@ import Stickers from "@/components/Stickers/Stickers";
 
 const StickersPage: FC = () => {
     return (
-        <div className="w-full justify-center items-center flex h-full">
+        <div className="w-full h-full flex grid grid-cols-2">
             <Stickers />
         </div>
     );
