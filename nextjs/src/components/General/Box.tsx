@@ -17,7 +17,7 @@ const Box: FC<BoxProps> = ({children, variant, className}) => {
     }
 
     return (
-        <div className={`flex border-4 border-blue-700 rounded-md items-center justify-center ${size} ${className}`}>
+        <div className={`flex border-4 border-blue-700 rounded-md items-center justify-center ${size} ${className} bg-primaryGrey`}>
             {children}
         </div>
     );
