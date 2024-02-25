@@ -3,6 +3,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import { fabric } from "fabric";
 import Stickers from "@/components/Stickers/Stickers";
+import Box from "@/components/General/Box";
 
 const App = () => {
     const [canvas, setCanvas] = useState<fabric.Canvas>();
@@ -44,12 +45,11 @@ const App = () => {
         canvas.remove(image);
     }
 
-
     return (
         <div className="flex w-full grid grid-cols-2 gap-10 p-4">
-            <div style={{ width: '100%', height: '100%' }}>
+            <Box className="w-full h-full">
                 <canvas id="canvas" ref={canvasRef}/>
-            </div>
+            </Box>
             <Stickers addImageToCanvas={addImageToCanvas} removeImageFromCanvas={removeImageFromCanvas}/>
         </div>
     );
