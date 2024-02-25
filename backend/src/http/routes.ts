@@ -17,9 +17,9 @@ const routes: Route[] = [
     },
     {
         method: 'get',
-        path: '/fetch-items',
+        path: '/stickers',
         controller: CraftController,
-        controllerFunction: 'fetchItems'
+        controllerFunction: 'stickers'
     }
 ];
 
