@@ -32,7 +32,7 @@ const SearchableDropdown: FC<SearchableDropdownProps> = ({ options,  setOption})
 
     const filteredOptions = options.filter((option) =>
         option.label.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ).slice(0, 5);
 
     return (
         <div className="relative inline-block text-black">
