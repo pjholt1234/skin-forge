@@ -1,12 +1,9 @@
 import React, {FC} from 'react';
 import Stickers from "@/components/Stickers/Stickers";
+import StickerWrapper from "@/components/Stickers/StickerWrapper";
 
 const StickersPage: FC = () => {
-    return (
-        <div className="w-full h-full flex grid grid-cols-2">
-            <Stickers />
-        </div>
-    );
+    return <StickerWrapper />;
 };
 
 export default StickersPage;

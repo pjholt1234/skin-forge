@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, FC} from 'react';
 import getStickers from "@/helpers/getStickers";
 import SearchableDropdown from "@/components/General/SearchableDropdown";
 import Box from "@/components/General/Box";
@@ -12,7 +12,12 @@ interface Option {
     label: string;
 }
 
-const Stickers = () => {
+interface Sticker {
+    addImageToCanvas: (imageUrl: string, index: number) => void;
+    removeImageFromCanvas: (index: number) => void;
+}
+
+const Stickers: FC<Sticker> = ({addImageToCanvas, removeImageFromCanvas}) => {
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
     const [item, setItem] = useState();
@@ -46,7 +51,7 @@ const Stickers = () => {
             return;
         }
 
-        const itemIndex = selectedItems.findIndex(
+        let itemIndex = selectedItems.findIndex(
             (selectedItem) => selectedItem === null || selectedItem === undefined
         );
         const updatedSelectedItems = [...selectedItems];
@@ -54,16 +59,20 @@ const Stickers = () => {
         if(itemIndex !== -1) {
             updatedSelectedItems[itemIndex] = item;
             setSelectedItems(updatedSelectedItems);
-            return;
+        } else {
+            itemIndex = selectedItems.length;
+            setSelectedItems([...selectedItems, item]);
         }
 
-        setSelectedItems([...selectedItems, item]);
+        addImageToCanvas(item.image_url, itemIndex);
     }
 
     const handleRemove = (index) => {
         const updatedSelectedItems = [...selectedItems];
         updatedSelectedItems[index] = null
         setSelectedItems(updatedSelectedItems);
+
+        removeImageFromCanvas(index);
     }
 
     useEffect(() => {
