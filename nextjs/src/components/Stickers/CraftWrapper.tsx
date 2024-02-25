@@ -6,7 +6,7 @@ import Box from "@/components/General/Box";
 import {ItemSelectionProvider} from "@/components/Stickers/SelectionProvider";
 import SelectionWrapper from "@/components/Stickers/SelectionWrapper";
 
-const App = () => {
+const CraftWrapper = () => {
     const [canvas, setCanvas] = useState<fabric.Canvas>();
     const canvasRef = useRef(null);
 
@@ -38,21 +38,17 @@ const App = () => {
         });
     };
 
-    const removeImageFromCanvas = (index) => {
+    const removeImageFromCanvas = (search) => {
         if (!canvas) return;
 
-        const image = canvas.getObjects().find((img) => img.id === index);
+        const image = canvas.getObjects().find((img) => img.id === search);
         canvas.remove(image);
     }
 
     const addBackgroundImage = (imageUrl) => {
         if (!canvas || !imageUrl) return;
 
-        const image = canvas.getObjects().find((img) => img.id === 'background');
-
-        if (image){
-            canvas.remove(image);
-        }
+        removeImageFromCanvas('background');
 
         fabric.Image.fromURL(imageUrl, (img) => {
             img.id = 'background';
@@ -66,7 +62,6 @@ const App = () => {
             img.sendToBack();
 
             canvas.add(img);
-
         });
     }
 
@@ -82,4 +77,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default CraftWrapper;
