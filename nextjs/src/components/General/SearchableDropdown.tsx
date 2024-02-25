@@ -52,7 +52,7 @@ const SearchableDropdown: FC<SearchableDropdownProps> = ({ options, setOption })
         <div className="relative inline-block text-black" ref={dropdownRef}>
             <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Start typing..."
                 value={selectedOption ? selectedOption.label : searchTerm}
                 onChange={handleInputChange}
                 onClick={toggleDropdown}
