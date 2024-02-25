@@ -5,7 +5,7 @@ import { Button, Input, Typography, Card } from '@material-tailwind/react';
 import axios from "axios";
 import { useCookies } from 'next-client-cookies';
 import { useRouter } from 'next/navigation';
-import InputError from './InputError';
+import InputError from '../InputError';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
