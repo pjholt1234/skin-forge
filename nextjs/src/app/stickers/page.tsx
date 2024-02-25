@@ -1,9 +1,8 @@
 import React, {FC} from 'react';
-import Stickers from "@/components/Stickers/Stickers";
-import StickerWrapper from "@/components/Stickers/StickerWrapper";
+import CraftWrapper from "@/components/Stickers/CraftWrapper";
 
 const StickersPage: FC = () => {
-    return <StickerWrapper />;
+    return <CraftWrapper />;
 };
 
 export default StickersPage;

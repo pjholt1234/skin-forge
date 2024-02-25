@@ -2,8 +2,9 @@
 
 import React, {useState, useEffect, useRef} from "react";
 import { fabric } from "fabric";
-import Stickers from "@/components/Stickers/Stickers";
 import Box from "@/components/General/Box";
+import {ItemSelectionProvider} from "@/components/Stickers/SelectionProvider";
+import SelectionWrapper from "@/components/Stickers/SelectionWrapper";
 
 const App = () => {
     const [canvas, setCanvas] = useState<fabric.Canvas>();
@@ -33,7 +34,6 @@ const App = () => {
 
         fabric.Image.fromURL(imageUrl, (img) => {
             img.id = index;
-            console.log(img);
             canvas.add(img);
         });
     };
@@ -45,12 +45,39 @@ const App = () => {
         canvas.remove(image);
     }
 
+    const addBackgroundImage = (imageUrl) => {
+        if (!canvas || !imageUrl) return;
+
+        const image = canvas.getObjects().find((img) => img.id === 'background');
+
+        if (image){
+            canvas.remove(image);
+        }
+
+        fabric.Image.fromURL(imageUrl, (img) => {
+            img.id = 'background';
+            img.selectable = false;
+
+            const aspectRatio = img.width / img.height;
+            const height = canvas.width / aspectRatio;
+
+            img.scaleToHeight(height);
+            img.scaleToWidth(canvas.width);
+            img.sendToBack();
+
+            canvas.add(img);
+
+        });
+    }
+
     return (
         <div className="flex w-full grid grid-cols-2 gap-10 p-4">
             <Box className="w-full h-full">
                 <canvas id="canvas" ref={canvasRef}/>
             </Box>
-            <Stickers addImageToCanvas={addImageToCanvas} removeImageFromCanvas={removeImageFromCanvas}/>
+            <ItemSelectionProvider>
+                <SelectionWrapper addImageToCanvas={addImageToCanvas} removeImageFromCanvas={removeImageFromCanvas} addBackgroundImage={addBackgroundImage}/>
+            </ItemSelectionProvider>
         </div>
     );
 };
