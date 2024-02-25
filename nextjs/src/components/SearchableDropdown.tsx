@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useState} from 'react';
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 
 interface Option {
     value: string | number;
@@ -10,10 +10,11 @@ interface SearchableDropdownProps {
     setOption: (options: Option) => void;
 }
 
-const SearchableDropdown: FC<SearchableDropdownProps> = ({ options,  setOption}) => {
+const SearchableDropdown: FC<SearchableDropdownProps> = ({ options, setOption }) => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -30,12 +31,25 @@ const SearchableDropdown: FC<SearchableDropdownProps> = ({ options,  setOption})
         setIsOpen(false);
     };
 
-    const filteredOptions = options.filter((option) =>
+    const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const filteredOptions = options.filter(option =>
         option.label.toLowerCase().includes(searchTerm.toLowerCase())
     ).slice(0, 5);
 
     return (
-        <div className="relative inline-block text-black">
+        <div className="relative inline-block text-black" ref={dropdownRef}>
             <input
                 type="text"
                 placeholder="Search..."
@@ -46,7 +60,7 @@ const SearchableDropdown: FC<SearchableDropdownProps> = ({ options,  setOption})
             />
             {isOpen && (
                 <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-                    {filteredOptions.map((option) => (
+                    {filteredOptions.map(option => (
                         <div
                             key={option.value}
                             className={`p-2 cursor-pointer hover:bg-gray-100 ${
