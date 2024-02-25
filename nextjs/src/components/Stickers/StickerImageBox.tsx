@@ -10,7 +10,7 @@ interface StickerImageBoxProps {
 
 const StickerImageBox: FC<StickerImageBoxProps> = ({selectedItem, handleRemove, index}) => {
   return (
-      <Box variant="sm" className="m-4 relative">
+      <Box variant="sm" className="m-1 relative">
           {selectedItem && (
               <button className="top-0 right-1 absolute" onClick={() => handleRemove(index)}>x</button>
           )}

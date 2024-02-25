@@ -12,7 +12,7 @@ const App = () => {
 
     useEffect(() => {
         const c = new fabric.Canvas("canvas", {
-            backgroundColor: "white",
+            backgroundColor: "#383838",
         });
 
         const container = canvasRef.current.parentNode;
