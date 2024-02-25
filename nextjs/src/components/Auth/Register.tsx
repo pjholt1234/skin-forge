@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button, Input, Typography, Card } from '@material-tailwind/react';
 import axios from "axios";
 import { useRouter } from 'next/navigation';
-import InputError from '../InputError';
+import InputError from '@/components/General/InputError';
 
 const Register: React.FC = () => {
     const [email, setEmail] = useState('');
