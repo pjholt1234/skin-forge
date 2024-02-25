@@ -1,11 +1,12 @@
 import React, {FC} from 'react';
+import Stickers from "@/components/Stickers/Stickers";
 
-const Page: FC = () => {
+const StickersPage: FC = () => {
     return (
         <div className="w-full justify-center items-center flex h-full">
-            Homepage
+            <Stickers />
         </div>
     );
 };
 
-export default Page;
+export default StickersPage;
