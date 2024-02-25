@@ -20,6 +20,12 @@ const routes: Route[] = [
         path: '/stickers',
         controller: CraftController,
         controllerFunction: 'stickers'
+    },
+    {
+        method: 'get',
+        path: '/weapons',
+        controller: CraftController,
+        controllerFunction: 'weapons'
     }
 ];
 
