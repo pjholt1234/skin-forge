@@ -59,9 +59,13 @@ const CraftWrapper = () => {
 
             img.scaleToHeight(height);
             img.scaleToWidth(canvas.width);
-            img.sendToBack();
 
             canvas.add(img);
+        });
+
+        canvas.on('object:added', function(object) {
+            const image = canvas.getObjects().find((img) => img.id === 'background');
+            image.sendToBack();
         });
     }
 
