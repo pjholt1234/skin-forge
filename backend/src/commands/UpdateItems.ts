@@ -28,9 +28,7 @@ class UpdateItems {
             return;
         }
 
-        const limit = 1000;
-
-        for (const item of response.data.slice(0, limit)) {
+        for (const item of response.data) {
             if ((item.market_name.includes('Sticker |') || item.market_name.includes('Factory New')) && !item.market_name.includes('StatTrak™')) {
                 await this.updateItem(item);
                 await this.getInspectUrl(item);
