@@ -1,9 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import SearchableDropdown from "@/components/General/SearchableDropdown";
 import { Button } from "@material-tailwind/react";
-import Box from "@/components/General/Box";
-import getStickers from "@/helpers/getStickers";
-import {useItemSelection} from "@/components/Stickers/SelectionProvider";
 
 interface Option {
     value: string | number;
