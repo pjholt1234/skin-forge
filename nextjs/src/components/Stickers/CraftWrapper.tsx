@@ -70,7 +70,7 @@ const CraftWrapper = () => {
     }
 
     return (
-        <div className="flex w-full grid grid-cols-2 gap-10 p-4">
+        <div className="flex w-full h-full grid grid-cols-2 gap-10 p-4 align-middle">
             <Box className="w-full h-full">
                 <canvas id="canvas" ref={canvasRef}/>
             </Box>
