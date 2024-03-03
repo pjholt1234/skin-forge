@@ -5,9 +5,12 @@ import { fabric } from "fabric";
 import Box from "@/components/General/Box";
 import {ItemSelectionProvider} from "@/components/Stickers/SelectionProvider";
 import SelectionWrapper from "@/components/Stickers/SelectionWrapper";
+import Settings from "@/components/General/Icons/Settings";
+import SettingModal from "@/components/Stickers/SettingsModal/SettingsModal";
 
 const CraftWrapper = () => {
     const [canvas, setCanvas] = useState<fabric.Canvas>();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -70,14 +73,20 @@ const CraftWrapper = () => {
     }
 
     return (
-        <div className="flex w-full h-full grid grid-cols-2 gap-10 p-4 align-middle">
-            <Box className="w-full h-full">
-                <canvas id="canvas" ref={canvasRef}/>
-            </Box>
-            <ItemSelectionProvider>
-                <SelectionWrapper addImageToCanvas={addImageToCanvas} removeImageFromCanvas={removeImageFromCanvas} addBackgroundImage={addBackgroundImage}/>
-            </ItemSelectionProvider>
-        </div>
+        <>
+            <SettingModal openModal={isModalOpen} closeModal={() => setIsModalOpen(false)}  />
+            <div className="flex w-full h-full grid grid-cols-2 gap-10 p-4 align-middle">
+                <Box className="w-full h-full relative">
+                    <button onClick={() => setIsModalOpen(true)} className="absolute top-0 right-0 m-2 z-10">
+                        <Settings />
+                    </button>
+                    <canvas id="canvas" ref={canvasRef}/>
+                </Box>
+                <ItemSelectionProvider>
+                    <SelectionWrapper addImageToCanvas={addImageToCanvas} removeImageFromCanvas={removeImageFromCanvas} addBackgroundImage={addBackgroundImage}/>
+                </ItemSelectionProvider>
+            </div>
+        </>
     );
 };
 
