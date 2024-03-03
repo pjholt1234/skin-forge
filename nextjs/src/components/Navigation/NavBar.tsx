@@ -8,7 +8,7 @@ const NavBar = () => {
     const isLogged = token ? true : false;
 
     return (
-        <nav className="w-full flex p-4 bg-primaryGrey border-b-4 border-blue-700 mb-10">
+        <nav className="w-full flex p-4 bg-primaryGrey border-b-4 border-blue-700">
             <div className="flex space-x-4">
                 <NavLink href="/" label="Home" />
                 <NavLink href="/crafting" label="Crafting" />
