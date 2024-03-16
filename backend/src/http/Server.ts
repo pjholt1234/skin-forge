@@ -1,15 +1,12 @@
 import express from "express";
 import cors from "cors";
-import importEnv from "../ImportEnv";
-import routes from "./routes";
 import Route from "../types/Route";
 
 class Server {
     public app: express.Application;
     private routes: any[];
 
-    constructor() {
-        importEnv();
+    constructor(routes: Route[]) {
         this.app = express();
         this.routes = routes;
         this.setUpServer();
@@ -67,6 +64,10 @@ class Server {
         }
 
         next();
+    }
+
+    public getRoutes(): Route[] {
+        return this.routes;
     }
 }
 
