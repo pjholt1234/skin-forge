@@ -1,12 +1,12 @@
 import ControllerInterface from "./ControllerInterface";
-import {PrismaClient} from "@prisma/client";
+import Prisma from "../../services/Prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export default class AuthController implements ControllerInterface {
     public static async login(req: any, res: any) {
 
-        const prisma = new PrismaClient();
+        const prisma = Prisma.instance();
 
         const { email, password } = req.body as { email: string, password: string };
 
@@ -47,7 +47,7 @@ export default class AuthController implements ControllerInterface {
     }
 
     public static async register(req: any, res: any) {
-        const prisma = new PrismaClient();
+        const prisma = Prisma.instance();
 
         const { email, password, name } = req.body as { email: string, password: string, name: string };
         

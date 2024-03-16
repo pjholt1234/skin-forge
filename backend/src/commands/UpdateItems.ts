@@ -1,8 +1,9 @@
 import axios, {AxiosResponse} from "axios";
 import importEnv from "../ImportEnv";
-import {PrismaClient} from "@prisma/client";
 import itemTypes from "../data/itemTypes";
 import CsMoneyImageScraper from "./ScrapeImageUrls";
+import Prisma from "../services/Prisma";
+import {PrismaClient} from "@prisma/client";
 
 class UpdateItems {
 
@@ -13,7 +14,7 @@ class UpdateItems {
         importEnv();
         console.log('Command start');
 
-        this.prisma = new PrismaClient();
+        this.prisma = Prisma.instance();
         this.run();
     }
 

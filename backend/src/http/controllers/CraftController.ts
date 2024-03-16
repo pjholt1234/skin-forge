@@ -1,9 +1,9 @@
 import ControllerInterface from "./ControllerInterface";
-import {PrismaClient} from "@prisma/client";
+import Prisma from "../../services/Prisma";
 
 export default class CraftController implements ControllerInterface {
     public static async stickers(req: any, res: any) {
-        const prisma = new PrismaClient();
+        const prisma = Prisma.instance();
         console.log('Fetching stickers...');
 
         try {
@@ -20,7 +20,7 @@ export default class CraftController implements ControllerInterface {
     }
 
     public static async weapons(req: any, res: any) {
-        const prisma = new PrismaClient();
+        const prisma = Prisma.instance();
         console.log('Fetching weapons...');
 
         try {
