@@ -3,3 +3,4 @@
 /backend/.env
 /.idea
 /.next
+/backend/.env.test
