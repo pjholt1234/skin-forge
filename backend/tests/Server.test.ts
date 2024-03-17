@@ -3,20 +3,33 @@ import ControllerFactory from "../src/factories/ControllerFactory";
 import RouteFactory from "../src/factories/RouteFactory";
 import request from 'supertest';
 
+let serverUtil: Server;
+let app: any;
+let server: any;
+
+beforeEach(async () => {
+    serverUtil = new Server();
+    app = serverUtil.app;
+    server = serverUtil.server;
+});
+
+afterEach(async () => {
+    await server.close();
+});
+
 
 describe('Server', () => {
-    it('should set up the server routes', () => {
+    it('should set up the server routes', async () => {
         const controller = new ControllerFactory().create();
-        const routes = new RouteFactory(controller, 'exampleGetRequest', 'get', '/example').create(1);
-        const server = new Server(routes);
+        const routes = new RouteFactory(controller, 'exampleGetRequest', [],'get', '/example').create(1);
 
-        expect(server).toBeDefined();
-        expect(server.getRoutes()).toEqual(routes);
+        serverUtil.registerRoutes(routes);
 
-        request(server.app)
+        expect(app).toBeDefined();
+        expect(serverUtil.getRoutes()).toEqual(routes);
+
+        await request(app)
             .get('/example')
             .expect(200);
     });
-
-
 });

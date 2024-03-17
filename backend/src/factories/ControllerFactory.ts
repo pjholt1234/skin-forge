@@ -16,19 +16,19 @@ class ControllerFactory extends Factory {
 
 class ControllerMock implements ControllerInterface {
     public static async exampleGetRequest(req: any, res: any) {
-        res.status(200);
+        res.status(200).send('Hello, world!');
     }
 
     public static async examplePostRequest(req: any, res: any) {
-        res.status(200);
+        res.status(200).send('Hello, world!');
     }
 
     public static async examplePutRequest(req: any, res: any) {
-        res.status(200);
+        res.status(200).send('Hello, world!');
     }
 
     public static async exampleDeleteRequest(req: any, res: any) {
-        res.status(200);
+        res.status(200).send('Hello, world!');
     }
 }
 
