@@ -1,28 +1,47 @@
 import express from "express";
 import cors from "cors";
 import Route from "../types/Route";
+import http from "http";
+import MiddlewareInterface from "./middleware/MiddlewareInterface";
 
 class Server {
     public app: express.Application;
-    private routes: any[];
+    public server: http.Server | null = null;
 
-    constructor(routes: Route[]) {
+    private routes: Route[] = [];
+
+    constructor() {
         this.app = express();
-        this.routes = routes;
-        this.setUpServer();
-        this.registerRoutes();
+        this.start();
     }
 
-    private setUpServer(): void {
+    private start(): void {
         this.app.use(express.json());
         this.app.use(cors());
 
-        this.app.listen(process.env.APP_PORT, () => {
+        this.server = this.app.listen(process.env.APP_PORT, () => {
             console.log(`Server is running on port ${process.env.APP_PORT}`);
         });
     }
 
-    private registerRoutes(): void {
+    public stop(): void {
+        process.on('SIGINT',
+            () => setTimeout(() => {
+                console.log(' Shutting down application');
+                if (this.server) {
+                    this.server.close(function () {
+                        console.log('All requests stopped, shutting down');
+                        process.exit();
+                    });
+                } else {
+                    console.log('Application closed already');
+                }
+            }, 0)
+        );
+    }
+
+    public registerRoutes(routes: Route[]): void {
+        this.routes = routes;
         // @ts-ignore
         this.routes.map((route: Route) => {
             const requestType = route.method as keyof express.Application;
@@ -38,32 +57,28 @@ class Server {
                 throw new Error("Invalid route.");
             }
 
+
+            let middlewares: MiddlewareInterface[] = [];
+
+
+            if(route.middleware?.length > 0) {
+                middlewares = this.prepareMiddleware(route.middleware);
+            }
+
             this.app[requestType](
                 route.path,
-                this.authMiddleware,
+                middlewares,
                 (req: Request, res: Response) =>
                     Controller[controllerFunction](req, res),
             );
         });
     }
 
-    private authMiddleware(req: any, res: any, next: any) {
-        const authorizationHeader = req.headers["authorization"];
-
-        if (!authorizationHeader) {
-            return res.status(403).send("Authentication required.");
-        }
-
-        const decodedCredentials = Buffer.from(
-            authorizationHeader,
-            "base64",
-        ).toString("utf-8");
-
-        if (decodedCredentials !== process.env.BASIC_AUTH_SECRET) {
-            return res.status(403).send("Authentication failed.");
-        }
-
-        next();
+    private prepareMiddleware(middlewares: MiddlewareInterface[]) {
+        return middlewares.map((middleware: MiddlewareInterface) => {
+            const middlewareClass = middleware.constructor as any;
+            return middlewareClass.action;
+        });
     }
 
     public getRoutes(): Route[] {
