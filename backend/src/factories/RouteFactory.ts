@@ -1,13 +1,15 @@
 import Factory from './Factory';
 import Route from "../types/Route";
 import ControllerInterface from "../http/controllers/ControllerInterface";
+import MiddlewareInterface from "../http/middleware/MiddlewareInterface";
 
 class RouteFactory extends Factory {
     constructor(
         public controller: ControllerInterface,
         public controllerFunction: string,
+        public middleware: MiddlewareInterface[],
         public method? : string,
-        public path?: string
+        public path?: string,
     ) {
         super();
     }
@@ -19,6 +21,10 @@ class RouteFactory extends Factory {
 
         if(!this.path) {
             this.path = this.faker.system.filePath();
+        }
+
+        if(!this.middleware) {
+            this.middleware = [];
         }
     }
 
@@ -45,7 +51,8 @@ class RouteFactory extends Factory {
             method: this.method,
             path: this.path,
             controller: this.controller,
-            controllerFunction: this.controllerFunction
+            controllerFunction: this.controllerFunction,
+            middleware: this.middleware
         }
     }
 }
