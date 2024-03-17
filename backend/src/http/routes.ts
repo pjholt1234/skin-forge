@@ -9,28 +9,28 @@ const routes: Route[] = [
         path: '/login',
         controller: AuthController,
         controllerFunction: 'login',
-        middleware: [AuthMiddleware]
+        middleware: [new AuthMiddleware()]
     },
     {
         method: 'post',
         path: '/register',
         controller: AuthController,
         controllerFunction: 'register',
-        middleware: [AuthMiddleware]
+        middleware: [new AuthMiddleware()]
     },
     {
         method: 'get',
         path: '/stickers',
         controller: CraftController,
         controllerFunction: 'stickers',
-        middleware: [AuthMiddleware]
+        middleware: [new AuthMiddleware()]
     },
     {
         method: 'get',
         path: '/weapons',
         controller: CraftController,
         controllerFunction: 'weapons',
-        middleware: [AuthMiddleware]
+        middleware: [new AuthMiddleware()]
     }
 ];
 

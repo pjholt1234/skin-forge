@@ -58,8 +58,7 @@ class Server {
             }
 
 
-            let middlewares: MiddlewareInterface[] = [];
-
+            let middlewares: any = [];
 
             if(route.middleware?.length > 0) {
                 middlewares = this.prepareMiddleware(route.middleware);
@@ -76,8 +75,7 @@ class Server {
 
     private prepareMiddleware(middlewares: MiddlewareInterface[]) {
         return middlewares.map((middleware: MiddlewareInterface) => {
-            const middlewareClass = middleware.constructor as any;
-            return middlewareClass.action;
+            return middleware.action;
         });
     }
 
