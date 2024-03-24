@@ -1,12 +1,11 @@
-import createPrismaMock from "prisma-mock";
-import DatabaseService from "../../src/services/DatabaseService";
 import UserFactory from "../../src/factories/UserFactory";
+import {withDatabase} from "../../test-helpers";
 
 describe('fetchData', () => {
     let prisma: any;
 
     beforeEach(async () => {
-        prisma = DatabaseService.getInstance(createPrismaMock()).getClient();
+        prisma = withDatabase();
     });
 
     it('Successfully creates a new users and retrieves record with mock client', async () => {

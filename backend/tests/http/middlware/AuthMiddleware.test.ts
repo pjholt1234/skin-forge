@@ -3,13 +3,14 @@ import ControllerFactory from "../../../src/factories/ControllerFactory";
 import RouteFactory from "../../../src/factories/RouteFactory";
 import request from 'supertest';
 import AuthMiddleware from "../../../src/http/middleware/AuthMiddleware";
+import {withDatabase, withServer} from "../../../test-helpers";
 
 let serverUtil: Server;
 let app: any;
 let server: any;
 
 beforeEach(async () => {
-    serverUtil = new Server();
+    serverUtil = withServer();
     app = serverUtil.app;
     server = serverUtil.server;
 });
