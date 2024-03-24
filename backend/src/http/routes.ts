@@ -9,14 +9,14 @@ const routes: Route[] = [
         path: '/login',
         controller: AuthController,
         controllerFunction: 'login',
-        middleware: [new AuthMiddleware()]
+        middleware: []
     },
     {
         method: 'post',
         path: '/register',
         controller: AuthController,
         controllerFunction: 'register',
-        middleware: [new AuthMiddleware()]
+        middleware: []
     },
     {
         method: 'get',
