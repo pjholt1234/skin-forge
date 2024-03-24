@@ -20,7 +20,7 @@ export default class CraftController implements ControllerInterface {
     }
 
     public static async weapons(req: any, res: any) {
-        const prisma = DatabaseService.getInstance().getClient();;
+        const prisma = DatabaseService.getInstance().getClient();
         console.log('Fetching weapons...');
 
         try {
