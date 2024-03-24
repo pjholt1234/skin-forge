@@ -41,7 +41,7 @@ export default class AuthController implements ControllerInterface {
 
         } catch (error) {
             console.log(error);
-            res.status(403).send('Authentication failed.');
+            res.status(403).send(error);
         }
     }
 
@@ -79,13 +79,11 @@ export default class AuthController implements ControllerInterface {
             });
 
             if (user) {
-                return res.status(400).json(
-                    res.status(400).send({ email: 'Email already exists.' })
-                );
+                return res.status(400).send({ email: 'Email already exists.' })
             }
         } catch (error) {
             console.log(error);
-            res.status(403).send('Registration failed.');
+            res.status(400).send('Registration failed.');
         }
 
         try {
@@ -101,7 +99,7 @@ export default class AuthController implements ControllerInterface {
 
             res.status(200).send(user);
         } catch (error) {
-            res.status(403).send('Registration failed.');
+            res.status(400).send('Registration failed.');
         }
     }
 }
