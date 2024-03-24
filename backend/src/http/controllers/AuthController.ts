@@ -1,12 +1,11 @@
 import ControllerInterface from "./ControllerInterface";
-import Prisma from "../../services/Prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import DatabaseService from "../../services/DatabaseService";
 
 export default class AuthController implements ControllerInterface {
     public static async login(req: any, res: any) {
-
-        const prisma = Prisma.instance();
+        const prisma = DatabaseService.getInstance().getClient();
 
         const { email, password } = req.body as { email: string, password: string };
 
@@ -47,7 +46,7 @@ export default class AuthController implements ControllerInterface {
     }
 
     public static async register(req: any, res: any) {
-        const prisma = Prisma.instance();
+        const prisma = DatabaseService.getInstance().getClient();
 
         const { email, password, name } = req.body as { email: string, password: string, name: string };
         
@@ -81,7 +80,7 @@ export default class AuthController implements ControllerInterface {
 
             if (user) {
                 return res.status(400).json(
-                    res.status(400).send({ email: 'Email already exisits.' })
+                    res.status(400).send({ email: 'Email already exists.' })
                 );
             }
         } catch (error) {
