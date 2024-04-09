@@ -1,6 +1,6 @@
 
 import UserFactory from "../../src/factories/UserFactory";
-import {withDatabase, withServer} from "../../test-helpers";
+import {refreshDatabase, withDatabase, withServer} from "../../test-helpers";
 import request from "supertest";
 import Server from "../../src/http/Server";
 
@@ -20,6 +20,7 @@ describe('Auth controller', () => {
     afterEach(async () => {
         await server.close();
         await prisma.$disconnect();
+        await refreshDatabase();
     });
 
     it('POST /login - successful login', async () => {

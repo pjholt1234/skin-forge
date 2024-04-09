@@ -1,11 +1,11 @@
 
 import UserFactory from "../../src/factories/UserFactory";
-import {withDatabase, withServer} from "../../test-helpers";
+import {refreshDatabase, withDatabase, withServer} from "../../test-helpers";
 import request from "supertest";
 import Server from "../../src/http/Server";
 import ItemFactory from "../../src/factories/ItemFactory";
 
-describe('Auth controller', () => {
+describe('Craft controller', () => {
     let prisma: any;
     let serverUtil: Server;
     let app: any;
@@ -21,6 +21,7 @@ describe('Auth controller', () => {
     afterEach(async () => {
         await server.close();
         await prisma.$disconnect();
+        await refreshDatabase();
     });
 
     it('GET /stickers - 403 without authorization', async () => {
