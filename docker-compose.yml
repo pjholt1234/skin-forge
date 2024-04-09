@@ -1,0 +1,48 @@
+version: '3.8'
+networks:
+  skin-forge-network:
+    driver: bridge
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        APP_ENV: ${APP_ENV}
+        APP_PORT: ${APP_PORT}
+        BASIC_AUTH_SECRET: ${BASIC_AUTH_SECRET}
+        AUTH_TOKEN: ${AUTH_TOKEN}
+        JWT_SECRET: ${JWT_SECRET}
+        APP_NAME: ${APP_NAME}
+        STEAM_API_KEY: ${STEAM_API_KEY}
+        DATABASE_URL: ${DATABASE_URL}
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - '/app/node_modules'
+    ports:
+      - '9999:9999'
+    networks:
+      - skin-forge-network
+
+  frontend:
+    build:
+      context: ./nextjs
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_AUTH_TOKEN: ${NEXT_PUBLIC_AUTH_TOKEN}
+        NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL}
+        JWT_SECRET: ${JWT_SECRET}
+        APP_NAME: ${APP_NAME}
+        STEAM_API_KEY: ${STEAM_API_KEY}
+    env_file:
+      - ./nextjs/.env
+    volumes:
+      - ./nextjs:/app
+      - '/app/node_modules'
+    ports:
+      - '3000:3000'
+    networks:
+      - skin-forge-network
