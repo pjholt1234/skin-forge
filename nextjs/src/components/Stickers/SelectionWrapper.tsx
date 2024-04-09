@@ -11,6 +11,7 @@ interface SelectionWrapperProps {
     addImageToCanvas: (imageUrl: string, index: number) => void;
     removeImageFromCanvas: (index: number) => void;
     addBackgroundImage: (imageUrl: string) => void;
+    children?: React.ReactNode | Element;
 }
 
 const SelectionWrapper: FC<SelectionWrapperProps> = ({addImageToCanvas, removeImageFromCanvas, addBackgroundImage}) => {

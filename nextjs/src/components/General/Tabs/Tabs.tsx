@@ -9,6 +9,7 @@ interface TabInfo {
 
 interface TabsProps {
     tabs: TabInfo[];
+    defaultTab?: number;
 }
 
 const Tabs: FC<TabsProps> = ({ tabs, defaultTab }) => {

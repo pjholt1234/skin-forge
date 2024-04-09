@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/login', request.url))
     }
 
-    const decoded = jwtDecode(token.value);
+    const decoded: any = jwtDecode(token.value);
     console.log(decoded);
     
     const expiration = decoded?.exp ?? 0;

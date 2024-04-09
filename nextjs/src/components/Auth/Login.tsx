@@ -63,20 +63,19 @@ const Login: React.FC = () => {
 
     return (
         loading ? (
-            <Card className="mt-6 w-96 p-5">
+            <Card className="mt-6 w-96 p-5" placeholder="placeholder">
                 <Typography variant="h5">
                     Loading...
                 </Typography>
             </Card>
         ) : (
-            <Card className="mt-6 w-96 p-5">
+            <Card className="mt-6 w-96 p-5" placeholder="placeholder">
                 <Typography variant="h5" className="mb-5">
                     Sign in
                 </Typography>
                 <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
                     <Input
                         variant="standard"
-                        requiredstandard
                         id="email"
                         label="Email"
                         name="email"

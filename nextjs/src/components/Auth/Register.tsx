@@ -76,13 +76,13 @@ const Register: React.FC = () => {
 
     return (
         loading ? (
-            <Card className="mt-6 w-96 p-5">
+            <Card className="mt-6 w-96 p-5" placeholder="placeholder">
                 <Typography variant="h5">
                     Loading...
                 </Typography>
             </Card>
         ) : (
-            <Card className="mt-6 w-96 p-5">
+            <Card className="mt-6 w-96 p-5" placeholder="placeholder">
                 <Typography variant="h5" className="mb-4">
                     Sign in
                 </Typography>

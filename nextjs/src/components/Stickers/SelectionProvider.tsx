@@ -9,6 +9,10 @@ interface SharedState {
     setSelectedSticker: (sticker: any) => void;
 }
 
+interface ItemSelectionProviderProps {
+    children?: React.ReactNode;
+}
+
 const SharedStateContext = createContext<SharedState | undefined>(undefined);
 
 export const useItemSelection = () => {
@@ -20,7 +24,7 @@ export const useItemSelection = () => {
     return context;
 };
 
-export const ItemSelectionProvider: FC = ({ children }) => {
+export const ItemSelectionProvider: FC<ItemSelectionProviderProps> = ({ children }) => {
     const [selectedStickers, setSelectedStickers] = useState([]);
     const [selectedWeapon, setSelectedWeapon] = useState(null);
     const [selectedSticker, setSelectedSticker] = useState(null);

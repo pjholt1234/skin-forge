@@ -35,7 +35,7 @@ const CraftWrapper = () => {
     const addImageToCanvas = (imageUrl, index) => {
         if (!canvas || !imageUrl) return;
 
-        fabric.Image.fromURL(imageUrl, (img) => {
+        fabric.Image.fromURL(imageUrl, (img: any) => {
             img.id = index;
             canvas.add(img);
         });
@@ -44,7 +44,7 @@ const CraftWrapper = () => {
     const removeImageFromCanvas = (search) => {
         if (!canvas) return;
 
-        const image = canvas.getObjects().find((img) => img.id === search);
+        const image = canvas.getObjects().find((img: any) => img.id === search);
         canvas.remove(image);
     }
 
@@ -53,7 +53,7 @@ const CraftWrapper = () => {
 
         removeImageFromCanvas('background');
 
-        fabric.Image.fromURL(imageUrl, (img) => {
+        fabric.Image.fromURL(imageUrl, (img: any) => {
             img.id = 'background';
             img.selectable = false;
 
@@ -67,7 +67,7 @@ const CraftWrapper = () => {
         });
 
         canvas.on('object:added', function(object) {
-            const image = canvas.getObjects().find((img) => img.id === 'background');
+            const image = canvas.getObjects().find((img: any) => img.id === 'background');
             image.sendToBack();
         });
     }
