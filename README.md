@@ -1,5 +1,5 @@
 
-# Room planner web application
+# Skin forge - CSGO Crafting Application
 
 I decided to combine both learning typescript, html canvas and its supporting JS API and MongoDB. The project was designed to be a room planner, heavily inspired by Canva
 
